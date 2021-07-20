@@ -1,0 +1,50 @@
+<mat-card>
+	<div class="container">
+		<div class="board">
+			<div 
+				*ngFor="let cell of cells;let index = index;trackBy:trackByIndex;"
+				#cellDiv
+				class="cell" 
+				tabindex="0"
+				[ngClass]="[getGroupId(index)!='0'?'group'+getGroupId(index):'', isClue(index)?'clue':'', isError(index)?'error':'', 
+					isBlockLeft(index)?'blockLeft':'', isBlockTop(index)?'blockTop':'', isNotPossible(index)?'not-possible':'']"
+				(click)="onCellClick(index)"
+				(keydown)="onKey($event, index)"
+			>
+				{{cells[index]}}
+				<div class="pencil-marks" *ngIf="cells[index]==''">
+					<div class="pencil-mark" *ngFor="let num of numbers">{{pencilMarks[index][num-1]?num:''}}</div>
+				</div>
+			</div>
+		</div>
+		<div class="numbers">
+			<mat-button-toggle-group [(ngModel)]="selNumber" multiple (change)="toggleNumberSelection($event)">
+				<mat-button-toggle *ngFor="let num of numbers" value="{{num}}" class="toggle no-pad">{{num}}</mat-button-toggle>
+			</mat-button-toggle-group>
+			<button mat-icon-button *ngIf="cluesSet" (click)="togglePencil()"><mat-icon *ngIf="pencil">edit</mat-icon><mat-icon *ngIf="!pencil">edit_off</mat-icon></button>
+		</div>
+		<div class="overlays">
+			<mat-button-toggle-group [(ngModel)]="overlayGroups" multiple (change)="toggleGroupOverlay($event)">
+				<mat-button-toggle *ngFor="let group of selGroups" value="{{group}}" matTooltip="{{getGroupName(group)}}" aria-label="{{getGroupName(group)}}" class="toggle no-pad">{{getGroupInitial(group)}}</mat-button-toggle>
+				<mat-button-toggle *ngIf="cluesSet" value="pencil" matTooltip="Pencil Marks" aria-label="Pencil Marks" class="toggle no-pad"><mat-icon>edit</mat-icon></mat-button-toggle>
+			</mat-button-toggle-group>
+		</div>
+		<div class="controls">
+			<button mat-button *ngIf="!cluesSet" [matMenuTriggerFor]="newMenu">New</button>
+			<mat-menu #newMenu="matMenu" yPosition="above">
+				<button mat-menu-item (click)="clear()">Blank</button>
+				<button mat-menu-item [disabled]="true">Easy</button>
+				<button mat-menu-item [disabled]="true">Medium</button>
+				<button mat-menu-item [disabled]="true">Hard</button>
+				<button mat-menu-item (click)="generate()">Generate</button>
+			</mat-menu>
+			<button mat-button *ngIf="!cluesSet" [disabled]="warning!=''" (click)="setClues()">Play</button>
+			<button mat-icon-button *ngIf="!cluesSet" (click)="openRulesDialog()" aria-label="Settings"><mat-icon>settings</mat-icon></button>
+			<button mat-button *ngIf="cluesSet" (click)="clear()">Clear</button>
+			<button mat-button *ngIf="cluesSet" (click)="reset()">Reset</button>
+			<button mat-button *ngIf="cluesSet" (click)="fillPencilMarks()">Fill</button>
+			<button mat-button *ngIf="cluesSet" (click)="solve()">Solve</button>
+		</div>
+		<div *ngIf="warning!=''" class="warning">{{warning}}</div>
+	</div>
+</mat-card>

@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Rules</h1>
+<div mat-dialog-content>
+	<mat-selection-list #list [(ngModel)]="selGroups" (ngModelChange)="onGroupsChanged()">
+		<mat-list-option *ngFor="let group of groups" [value]="group.value">
+			{{group.name}}
+		</mat-list-option>
+	</mat-selection-list>
+</div>
+<div mat-dialog-actions>
+	<button mat-button [disabled]="!valid" [mat-dialog-close]="selGroups" cdkFocusInitial>Ok</button>
+</div>

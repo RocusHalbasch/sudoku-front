@@ -1,0 +1,166 @@
+:host {
+	--sudoku-cell-size: 40px;
+	--thin-sudoku-border: 1px;
+	--thick-sudoku-border: 3px;
+	--outside-sudoku-border-thin: 3px;
+	--outside-sudoku-border-thick: 6px;
+	--sudoku-font-size: calc(var(--sudoku-cell-size) / 4 * 3); 
+	--sudoku-borders-size: calc(var(--thin-sudoku-border) * 6 + var(--thick-sudoku-border) * 3);
+	--sudoku-board-size: calc(var(--sudoku-borders-size) + var(--sudoku-cell-size) * 9);
+	--sudoku-size: calc(var(--sudoku-board-size) + var(--outside-sudoku-border-thin) + var(--outside-sudoku-border-thick));
+	--light-red: #f99;
+	--light-orange: #fc9;
+	--light-yellow: #ff9;
+	--light-green: #9f9;
+	--light-cyan: #9ff;
+	--light-blue: #99f;
+	--light-purple: #c9f;
+	--light-magenta: #f9f;
+	--light-pink: #f9c;
+	--light-grey: #999;
+}
+
+@media (max-width: 415px) {
+    :host {
+		--sudoku-cell-size: calc((100vw - 32px - var(--sudoku-borders-size) - var(--outside-sudoku-border-thin) - var(--outside-sudoku-border-thick)) / 9);
+	}
+}
+
+.container {
+	width: var(--sudoku-size);
+	margin: auto;
+}
+
+.board {
+	width: calc(var(--sudoku-borders-size)+var(--sudoku-cell-size)*9);
+	border: solid black;
+	border-width: 3px 6px 6px 3px;
+	margin: auto;
+}
+
+.blockTop {
+	border-top: var(--thick-sudoku-border) solid black !important;
+}
+
+.blockLeft {
+	border-left: var(--thick-sudoku-border) solid black !important;
+}
+
+.cell {
+	display: inline-block;
+	vertical-align: top;
+	width: var(--sudoku-cell-size);
+	height: var(--sudoku-cell-size);
+	line-height: var(--sudoku-cell-size);
+	font-size: var(--sudoku-font-size);
+	border: solid black;
+	border-width: var(--thin-sudoku-border) 0px 0px var(--thin-sudoku-border);
+	text-align: center;
+	padding: 0;
+	color: blue;
+	background: white;
+}
+
+.cell:focus {
+	outline: none;
+	box-shadow: inset 0 0 3px #0000ff;
+}
+
+.clue {
+	color: black;
+}
+
+.pencil-marks {
+	line-height: calc(var(--sudoku-cell-size) / 3);
+}
+
+.pencil-mark {
+	display: inline-block;
+	vertical-align: top;
+	width: calc(var(--sudoku-cell-size) / 3);
+	height: calc(var(--sudoku-cell-size) / 3);
+	font-size: calc(var(--sudoku-cell-size) / 3);
+	text-align: center;
+	padding: 0;
+	color: black;
+	background: transparent;
+}
+
+.error {
+	color: red;
+}
+
+.group1 {
+	background: var(--light-red);
+}
+
+.group2 {
+	background: var(--light-orange);
+}
+
+.group3 {
+	background: var(--light-yellow);
+}
+
+.group4 {
+	background: var(--light-green);
+}
+
+.group5 {
+	background: var(--light-cyan);
+}
+
+.group6 {
+	background: var(--light-blue);
+}
+
+.group7 {
+	background: var(--light-purple);
+}
+
+.group8 {
+	background: var(--light-magenta);
+}
+
+.group9 {
+	background: var(--light-grey);
+}
+
+.groupc {
+	background: repeating-linear-gradient(
+		135deg,
+		var(--light-red),
+		var(--light-red) 5px,
+		var(--light-blue) 5px,
+		var(--light-blue) 10px
+	);
+}
+
+.not-possible {
+	background: var(--light-grey);
+}
+
+.warning {
+	background: red;
+	padding: 3px;
+	border-radius: 6px;
+	text-align: center;
+}
+
+.controls {
+	display: flex;
+	justify-content: space-between;
+}
+
+.overlays {
+	display: flex;
+}
+
+.numbers {
+	display: flex;
+	align-items: center;
+}
+
+.toggle {
+	width: 416px;
+}
