@@ -24,6 +24,7 @@ export class SudokuSolverComponent implements DoCheck, OnInit {
   pencil: boolean;
   pencilMarks: boolean[][];
   warning: string = '';
+  canPlay: boolean = false;
   numbers: number[] = [1,2,3,4,5,6,7,8,9];
   differ: IterableDiffer<string>;
   @HostBinding("style.--sudoku-cell-size") @Input() sudokuCellSize: string = '40px';
@@ -148,6 +149,7 @@ export class SudokuSolverComponent implements DoCheck, OnInit {
       this.warning = '';
       this.all = [];
       data.all.forEach(cell => {this.all.push(cell.toString())});
+      this.canPlay = true;
     } else {
       if(data.clueStatus == ClueStatus.INVALID) 
         this.warning = 'Clues violate Sudoku rules.';
@@ -155,11 +157,13 @@ export class SudokuSolverComponent implements DoCheck, OnInit {
         this.warning = 'More than one solution.';
       else if(data.answerStatus == AnswerStatus.UN_SOLVABLE)
         this.warning = 'There are no valid solutions.';
+      this.canPlay = false;
     }
   }
 
   setCommunicationErrorWarning(): void {
     this.warning = 'Error communicating with server.';
+    this.canPlay = false;
   }
 
   updateLocalStorage(): void {

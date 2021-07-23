@@ -38,7 +38,7 @@
 				<button mat-menu-item [disabled]="true">Hard</button>
 				<button mat-menu-item (click)="generate()">Generate</button>
 			</mat-menu>
-			<button mat-button *ngIf="!cluesSet" [disabled]="warning!=''" (click)="setClues()">Play</button>
+			<button mat-button *ngIf="!cluesSet" [disabled]="!canPlay" (click)="setClues()">Play</button>
 			<button mat-icon-button *ngIf="!cluesSet" (click)="openRulesDialog()" aria-label="Settings"><mat-icon>settings</mat-icon></button>
 			<button mat-button *ngIf="cluesSet" (click)="clear()">Clear</button>
 			<button mat-button *ngIf="cluesSet" (click)="reset()">Reset</button>
