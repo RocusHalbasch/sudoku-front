@@ -230,7 +230,7 @@ export class SudokuSolverComponent implements DoCheck, OnInit {
       this.selGroups.forEach(group => {
         let groupsStr = (Groups.groups.get(group)?.groups||'');
         for (var i = 0; i < groupsStr.length; i++) {
-          if(groupsStr.charAt(i) == groupsStr.charAt(cell))
+          if(groupsStr.charAt(i) != '0' && groupsStr.charAt(i) == groupsStr.charAt(cell))
             this.pencilMarks[i][markPos] = false;
         }
       });
