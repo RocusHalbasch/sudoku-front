@@ -135,7 +135,12 @@ export class SudokuSolverComponent implements DoCheck, OnInit {
       for(let i=0; i<81; i++)
         this.cells[i] = data.clues[i] == 0 ? '' : data.clues[i].toString();
       this.handleSolution(data);
-    });
+    }, error => this.setCommunicationErrorWarning());
+  }
+
+  updateSolution() {
+    this.sudoku.solve(this.getCellsString(), this.selGroups).subscribe(data => this.handleSolution(data), 
+      error => this.setCommunicationErrorWarning());
   }
 
   handleSolution(data: SudokuSolution): void {
@@ -153,6 +158,10 @@ export class SudokuSolverComponent implements DoCheck, OnInit {
     }
   }
 
+  setCommunicationErrorWarning(): void {
+    this.warning = 'Error communicating with server.';
+  }
+
   updateLocalStorage(): void {
     localStorage.setItem('selGroups', JSON.stringify(this.selGroups));
     localStorage.setItem('overlayGroups', JSON.stringify(this.overlayGroups));
@@ -167,10 +176,6 @@ export class SudokuSolverComponent implements DoCheck, OnInit {
 
   trackByIndex(index: number, _obj: string): any {
     return index;
-  }
-
-  updateSolution() {
-    this.sudoku.solve(this.getCellsString(), this.selGroups).subscribe(data => this.handleSolution(data));
   }
 
   toggleGroupOverlay(event: MatButtonToggleChange): void {
