@@ -136,12 +136,12 @@ export class SudokuSolverComponent implements DoCheck, OnInit {
       for(let i=0; i<81; i++)
         this.cells[i] = data.clues[i] == 0 ? '' : data.clues[i].toString();
       this.handleSolution(data);
-    }, error => this.setCommunicationErrorWarning());
+    }, () => this.setCommunicationErrorWarning());
   }
 
   updateSolution() {
     this.sudoku.solve(this.getCellsString(), this.selGroups).subscribe(data => this.handleSolution(data), 
-      error => this.setCommunicationErrorWarning());
+      () => this.setCommunicationErrorWarning());
   }
 
   handleSolution(data: SudokuSolution): void {
